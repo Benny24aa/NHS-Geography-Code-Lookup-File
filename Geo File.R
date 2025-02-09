@@ -40,5 +40,12 @@ HB_Lookup <- HB_Lookup |>
   select(-Country,-HBDateEnacted)|>
   filter(is.na(HBDateArchived))|>
   select(-HBDateArchived) %>% 
-  mutate(GeoType = "Health Board")
+  mutate(GeoType = "Health Board") %>% 
+  rename(GeoCode = HB, GeoName = HBName)
 
+Council_Lookup <- Council_Lookup %>% 
+  select(CA, CAName, CADateArchived) %>% 
+filter(is.na(CADateArchived))|>
+  select(-CADateArchived) %>% 
+  mutate(GeoType = "Council Area") %>% 
+  rename(GeoCode = CA, GeoName = CAName)
