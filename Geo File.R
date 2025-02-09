@@ -43,9 +43,18 @@ HB_Lookup <- HB_Lookup |>
   mutate(GeoType = "Health Board") %>% 
   rename(GeoCode = HB, GeoName = HBName)
 
+HB_Lookup$HB = HB_Lookup$GeoCode
+
 Council_Lookup <- Council_Lookup %>% 
-  select(CA, CAName, CADateArchived) %>% 
+  select(CA, CAName, CADateArchived, HB) %>% 
 filter(is.na(CADateArchived))|>
   select(-CADateArchived) %>% 
   mutate(GeoType = "Council Area") %>% 
   rename(GeoCode = CA, GeoName = CAName)
+
+
+
+Interminate_Zone_Lookup <- Interminate_Zone_Lookup %>% 
+  select(IntZone, IntZoneName, HB) %>% 
+  mutate(GeoType = "Interminate Zone") %>% 
+  rename(GeoCode = IntZone, GeoName = IntZoneName)
