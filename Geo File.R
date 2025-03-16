@@ -43,11 +43,14 @@ HB_Lookup <- HB_Lookup |>
   mutate(GeoType = "Health Board") 
 
 Council_Lookup <- Council_Lookup %>% 
-  select(CA, CAName, CADateArchived, HB) %>% 
+  select(CA, CAName, CADateArchived) %>% 
 filter(is.na(CADateArchived))|>
   select(-CADateArchived) %>% 
   mutate(GeoType = "Council Area") %>% 
   rename(GeoCode = CA, GeoName = CAName)
+
+Council_Lookup <- Council_Lookup %>% 
+  distinct()
 
 Interminate_Zone_Lookup <- Interminate_Zone_Lookup %>% 
   select(IntZone, IntZoneName, HB) %>% 
@@ -66,7 +69,6 @@ Data_Zone_Lookup <- Data_Zone_Lookup %>%
 
 Lookup_List <- bind_rows(Council_Lookup, Interminate_Zone_Lookup, Hospital_Lookup, Data_Zone_Lookup)
 
-rm(Council_Lookup, Interminate_Zone_Lookup, Hospital_Lookup, Data_Zone_Lookup)
 
 write_xlsx(Lookup_List, "Lookup_List.xlsx")
 write_xlsx(HB_Lookup, "HB_List.xlsx")
